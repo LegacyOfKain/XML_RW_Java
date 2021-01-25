@@ -1,36 +1,27 @@
 package com.priyanku.xml.stax;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.IntStream;
-import java.util.ArrayList;
 
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.stream.XMLEventReader;
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.namespace.QName;
 
-public class StaxParserAWM {
+
+public class StaxParserSkeleton {
 
 	public static List<MonitoredFolderDirectory> parse(String path) {
 
-		List<MonitoredFolderDirectory> monitoredFolderDirectoriesList = new ArrayList<>();
-		//MonitoredFolderDirectory monitoredFolderDirectory = null;
 
 		try {
 			XMLInputFactory factory = XMLInputFactory.newInstance();
 			XMLStreamReader parser = factory.createXMLStreamReader(new FileInputStream(path));
+
 
 			Stack<QName> sk=new Stack<QName>();
 	        QName monitoredFolderDirectories=new QName("monitoredFolderDirectories");    //if this is the parent looking for
@@ -47,39 +38,12 @@ public class StaxParserAWM {
 					
 					if (add.equals(parser.getName())) {
 	                    if (monitoredFolderDirectories.equals(sk.peek())) {
-	                    	
 	                        //do thing you want to do on name element with parent advisory
 	                    	int attributeCount = parser.getAttributeCount();
-	                    	// make the pojo effectively final (all variables are by default in java 8 final
-	                    	// if they are not changed after invocation, for eg: as shown below
-	                    	// int variable = 123;
-	                    	// variable = 456;
-	                    	//
-	                    	MonitoredFolderDirectory monitoredFolderDirectory = new MonitoredFolderDirectory();
+	                    	
 	                    	IntStream.range(0, attributeCount).forEachOrdered(n -> {
-	                    		String attributeName = parser.getAttributeName(n).getLocalPart();
-	                    		String attributeValue = parser.getAttributeValue(n);
-	                    		if(attributeName.equalsIgnoreCase("host"))
-	                    		{
-	                    			monitoredFolderDirectory.setHost(attributeValue);
-	                    		}
-	                    		else if(attributeName.equalsIgnoreCase("key"))
-	                    		{
-	                    			monitoredFolderDirectory.setName(attributeValue);
-	                    		}
-	                    		else if(attributeName.equalsIgnoreCase("folderdirectory"))
-	                    		{
-	                    			monitoredFolderDirectory.setPath(attributeValue);
-	                    		}
-	                    		else if(attributeName.equalsIgnoreCase("folderlimit"))
-	                    		{
-	                    			monitoredFolderDirectory.setFolderlimit(attributeValue);
-	                    		}
-	                    		
+	                    		System.out.print("--" + parser.getAttributeName(n).getLocalPart()+"--"   );
 	                    	});
-	                    	monitoredFolderDirectoriesList.add(monitoredFolderDirectory);
-	                    	
-	                    	
 	                    } else {
 	                        //do different thing if any on name element with parent other than advisory
 	                    }
@@ -110,14 +74,14 @@ public class StaxParserAWM {
 			ex.printStackTrace(); 
 		}
 		
-		return monitoredFolderDirectoriesList;
+		return null;
 	}
 
 	public static void main(String args[])
 	{
-		parse("sample_AWM.xml")
-        .stream()
-		.forEach(System.out::println);
+		parse("sample_AWM.xml");
+        //.stream()
+		//.forEach(System.out::println);
 	}
 
 }
