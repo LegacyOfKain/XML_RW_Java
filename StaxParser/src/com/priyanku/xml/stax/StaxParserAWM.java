@@ -49,14 +49,16 @@ public class StaxParserAWM {
 	                    if (monitoredFolderDirectories.equals(sk.peek())) {
 	                    	
 	                        //do thing you want to do on name element with parent advisory
+	                    	
 	                    	int attributeCount = parser.getAttributeCount();
+	                    	
 	                    	// make the pojo effectively final (all variables are by default in java 8 final
 	                    	// if they are not changed after invocation, for eg: as shown below
 	                    	// int variable = 123;
 	                    	// variable = 456;
-	                    	//
 	                    	MonitoredFolderDirectory monitoredFolderDirectory = new MonitoredFolderDirectory();
-	                    	IntStream.range(0, attributeCount).forEachOrdered(n -> {
+	                    	//IntStream.range(0, attributeCount).forEachOrdered(n -> {
+	                    	IntStream.range(0, attributeCount).parallel().forEach(n -> {
 	                    		String attributeName = parser.getAttributeName(n).getLocalPart();
 	                    		String attributeValue = parser.getAttributeValue(n);
 	                    		if(attributeName.equalsIgnoreCase("host"))
@@ -115,8 +117,15 @@ public class StaxParserAWM {
 
 	public static void main(String args[])
 	{
+		
 		parse("sample_AWM.xml")
         .stream()
+        .filter(e->e!=null)
+        //print new line
+        .peek(e->System.out.println())
+        .peek(e->{
+        	 
+        })
 		.forEach(System.out::println);
 	}
 
