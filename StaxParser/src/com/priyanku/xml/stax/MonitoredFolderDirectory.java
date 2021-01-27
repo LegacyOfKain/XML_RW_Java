@@ -4,7 +4,8 @@ public class MonitoredFolderDirectory {
 	
 	private String name;
 	private String path;
-	private String folderlimit;
+	private int folderlimit;
+	private int folderCount;
 	private String host;
 	
 	public String getName() {
@@ -19,10 +20,10 @@ public class MonitoredFolderDirectory {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public String getFolderlimit() {
+	public int getFolderlimit() {
 		return folderlimit;
 	}
-	public void setFolderlimit(String folderlimit) {
+	public void setFolderlimit(int folderlimit) {
 		this.folderlimit = folderlimit;
 	}
 	public String getHost() {
@@ -32,10 +33,17 @@ public class MonitoredFolderDirectory {
 		this.host = host;
 	}
 	
+	public int getFolderCount() {
+		return folderCount;
+	}
+	public void setFolderCount(int folderCount) {
+		this.folderCount = folderCount;
+	}
+	
 	@Override
 	public String toString() {
-		return "MonitoredFolderDirectory [name=" + name + ", path=" + path + ", folderlimit=" + folderlimit + ", host="
-				+ host + "]";
+		return "MonitoredFolderDirectory [name=" + name + ", path=" + path + ", folderlimit=" + folderlimit
+				+ ", folderCount=" + folderCount + ", host=" + host + "]";
 	}
 
 	

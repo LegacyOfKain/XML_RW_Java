@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <appSettings>
-    <add key="LogFileLocation" value="D:\AWM2.0\Agents\agents\instruments\logs\"/>
+    <add key="LogFileLocation" value="C:\Temp\logs\"/>
     <add key="LogFileExtension" value="log"/>
   </appSettings>
   <monitoredFolderDirectories>
-   <add key="C_AS_ACD_Spectrum" host="NRCHBS-SWP4131" folderdirectory="D:\AWM-InBox\Prod\Core\AS\AS_Report\C_AS_ACD_Spectrum\" folderlimit="10" agelimit="5" extensions="esp"/>
-   <add key="C_AS_MS_Dev1" host="NRCHBS-SWP4131" folderdirectory="D:\AWM-InBox\Prod\Core\AS\MS\C_AS_MS_Dev1\" folderlimit="10" agelimit="5" extensions="d"/>
-   <add key="C_AS_MS_PDF" host="NRCHBS-SWP4131" folderdirectory="D:\AWM-InBox\Prod\Core\AS\MS\C_AS_MS_PDF\" folderlimit="10" agelimit="5" extensions="pdf"/>
-   <add key="C_AS_MS_PDF_Report1" host="NRCHBS-SWP4131" folderdirectory="D:\AWM-InBox\Prod\Core\AS\MS\C_AS_MS_PDF_Report1\" folderlimit="10" agelimit="5" extensions="pdf"/>
+   <add key="C_AS_ACD_Spectrum" host="NRCHBS-SWP4131" folderdirectory="C:\Temp\test1\" folderlimit="10" agelimit="5" />
+   <add key="C_AS_MS_Dev1" host="NRCHBS-SWP4131" folderdirectory="C:\Temp\test2\" folderlimit="10" agelimit="5" />
+   <add key="C_AS_MS_PDF" host="NRCHBS-SWP4131" folderdirectory="C:\Temp\test3\" folderlimit="10" agelimit="5" />
+   <add key="C_AS_MS_PDF_Report1" host="NRCHBS-SWP4132" folderdirectory="C:\Temp\test4\" folderlimit="10" agelimit="5" />
+   <add key="C_AS_MS_PDF_Report2" host="NRCHBS-SWP4133" folderdirectory="C:\Temp\test5\" folderlimit="10" agelimit="5" />
+   <add key="C_AS_MS_PDF_Report3" host="NRCHBS-SWP4134" folderdirectory="C:\Temp\test6\" folderlimit="10" agelimit="5" />
   </monitoredFolderDirectories>
 </configuration>

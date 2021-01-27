@@ -1,24 +1,21 @@
 package com.priyanku.xml.stax;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.IntStream;
 import java.util.ArrayList;
 
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.stream.XMLEventReader;
+import com.google.common.primitives.Ints;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
 import javax.xml.namespace.QName;
 
 public class StaxParserAWM {
@@ -72,10 +69,34 @@ public class StaxParserAWM {
 	                    		else if(attributeName.equalsIgnoreCase("folderdirectory"))
 	                    		{
 	                    			monitoredFolderDirectory.setPath(attributeValue);
+	                    			monitoredFolderDirectory.setFolderCount(0);
+	                    			File folderDir = new File (attributeValue);
+	                    			if(folderDir.exists() && folderDir.isDirectory())
+	                    			{
+	                    				monitoredFolderDirectory.setFolderCount(
+				                    				folderDir.listFiles(new FileFilter() {
+				                    				    @Override
+				                    				    public boolean accept(File file) {
+				                    				    	// isDirectory is not that accurate, isFile returns false if file does not exist or if it is a directory
+				                    				        return ( !file.isFile() && 
+				                    				        		!(file.getName().equalsIgnoreCase("error")
+				                    				        				||
+				                    				        				file.getName().equalsIgnoreCase("save")
+				                    				        		)
+				                    				        	);
+				                    				    }
+				                    				}).length
+	                    				);
+	                    			}
+	                    			
 	                    		}
 	                    		else if(attributeName.equalsIgnoreCase("folderlimit"))
 	                    		{
-	                    			monitoredFolderDirectory.setFolderlimit(attributeValue);
+	                    			monitoredFolderDirectory.setFolderlimit(
+	                    						Optional.ofNullable(attributeValue)
+	                    								.map(Ints::tryParse)
+	                    								.orElse(0)
+	                    								);
 	                    		}
 	                    		
 	                    	});
@@ -121,11 +142,9 @@ public class StaxParserAWM {
 		parse("sample_AWM.xml")
         .stream()
         .filter(e->e!=null)
+        .filter(e->e.getFolderCount()>e.getFolderlimit())
         //print new line
         .peek(e->System.out.println())
-        .peek(e->{
-        	 
-        })
 		.forEach(System.out::println);
 	}
 
